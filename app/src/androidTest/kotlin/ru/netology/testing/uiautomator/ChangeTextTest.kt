@@ -128,12 +128,13 @@ class ChangeTextTest {
         val intent = context.packageManager.getLaunchIntentForPackage(MODEL_PACKAGE)
         context.startActivity(intent)
         device.wait(Until.hasObject(By.pkg(MODEL_PACKAGE)), TIMEOUT)
+        val initialText = device.findObject(By.res(MODEL_PACKAGE, "textToBeChanged")).text
 
         device.findObject(By.res(MODEL_PACKAGE, "userInput")).text = textEmpty
         device.findObject(By.res(MODEL_PACKAGE, "buttonChange")).click()
 
         val result = device.findObject(By.res(MODEL_PACKAGE, "textToBeChanged")).text
-        assertEquals(result, textEmpty)
+        assertEquals(result, initialText)
     }
 
     @Test
@@ -150,12 +151,13 @@ class ChangeTextTest {
         val intent = context.packageManager.getLaunchIntentForPackage(MODEL_PACKAGE)
         context.startActivity(intent)
         device.wait(Until.hasObject(By.pkg(MODEL_PACKAGE)), TIMEOUT)
+        val initialText = device.findObject(By.res(MODEL_PACKAGE, "textToBeChanged")).text
 
         device.findObject(By.res(MODEL_PACKAGE, "userInput")).text = textSpaces
         device.findObject(By.res(MODEL_PACKAGE, "buttonChange")).click()
 
         val result = device.findObject(By.res(MODEL_PACKAGE, "textToBeChanged")).text
-        assertEquals(result, textSpaces)
+        assertEquals(result, initialText)
 
     }
 
@@ -166,8 +168,6 @@ class ChangeTextTest {
 
         device.findObject(By.res(packageName, "userInput")).text = textToSet
         device.findObject(By.res(packageName, "buttonActivity")).click()
-
-        waitForPackage(packageName)
 
         val result = device.findObject(By.res(packageName, "text")).text
         assertEquals(result, textToSet)

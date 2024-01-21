@@ -2,7 +2,6 @@ package ru.netology.testing.uiautomator
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.action.Press
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
@@ -168,6 +167,8 @@ class ChangeTextTest {
 
         device.findObject(By.res(packageName, "userInput")).text = textToSet
         device.findObject(By.res(packageName, "buttonActivity")).click()
+
+        waitForPackage(packageName)
 
         val result = device.findObject(By.res(packageName, "text")).text
         assertEquals(result, textToSet)
